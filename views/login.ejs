@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./css/main.css">
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			$("#form").submit(function (event) {
+				event.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					url: '/login',
+					data: $('#form').serialize(),
+					dataType: "json",
+					success: function (response) {
+						//alert("a");
+						//console.log(response.Success);
+						$('#form')[0].reset();
+
+						document.getElementById("check").innerHTML = response.Success;
+						//ADD THIS CODE
+						setTimeout(function () {
+							document.getElementById("check").innerHTML = "";
+						}, 3000);
+						if (response.Success == "Success!") {
+							document.getElementById("aa").click();
+						};
+					},
+					error: function () {
+					}
+				})
+			});
+
+		});
+	</script>
+</head>
+
+<body style="width: 100%; height:100vh; display:flex; justify-content: center;align-items: center;">
+	<div style="width:400px" class="">
+		<div   class="form-group registration-form">
+			<form id="form" style="width: 100%;" method="post">
+				<div class="heading"><p>Login</p></div> 
+					<div>
+						<label for="email">Email:</label>
+						<input type="email" id="email" name="email" placeholder="Email" required=""
+							class="form-control" />
+					</div>
+					<div>
+						<label for="password">Password:</label>
+						<input type="password" id="password" name="password" placeholder="Password" required=""
+							class="form-control" />
+					</div>
+					<input type="submit" value="Login" class="btn btn-success">
+					<div style="margin-top: 16px;"><span>Do you forgot password?</span><a style="margin-left: 4px;" href="/forgetpass">Click here</a>
+						<div><span>Create a new Account?</span><a style="margin-left: 4px;" href="/">Register here</a>
+			
+						</div>
+			
+					</div>
+				</form>
+			</form>
+		</div>
+		<div class="mssg bg-success">
+			<span id="check"></span>
+		</div>
+		<div id="LangTable"><a href="/profile" id="aa"></a>
+		</div>
+		
+</body>
+
+</html>
